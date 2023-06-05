@@ -8,7 +8,7 @@ WIDTH = 600
 HEIGHT = 600
 FPS = 60
 
-ROWS = 20
+ROWS = 15
 gridSize = WIDTH // ROWS
 
 ds = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -83,12 +83,13 @@ def removeWalls(current, new):
 
 def main():
     run = True
+    done = False
 
     current = grid[0]
     current.visited = True
 
     while run:
-        ds.fill((51, 51, 51))
+        ds.fill((11, 11, 11))
 
         # Step 1
         new = check_neighbors(current.i, current.j)
@@ -105,11 +106,13 @@ def main():
         elif len(stack) > 0:
             current = stack.pop(-1)
         else:
-            print('Maze Completed')
+            done = True
 
         for g in grid:
             g.draw(ds)
-        current.highlight(ds)
+
+        if not done:
+            current.highlight(ds)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

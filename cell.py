@@ -9,7 +9,7 @@ class Cell:
 
         self.visited = False
 
-        self.visitedColor = (80, 250, 80)
+        self.visitedColor = (80, 80, 250)
         pass
 
     def draw(self, ds):
