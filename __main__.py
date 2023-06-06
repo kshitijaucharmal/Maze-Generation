@@ -20,7 +20,6 @@ stack = []
 
 for i in range(ROWS):
     for j in range(ROWS):
-        cell = Cell
         grid.append(Cell(i, j, gridSize))
 
 def index(i, j):
