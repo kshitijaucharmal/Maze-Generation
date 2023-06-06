@@ -9,13 +9,14 @@ class Cell:
 
         self.visited = False
 
-        self.visitedColor = (80, 80, 250)
+        self.visitedColor = (51, 51, 51)
         pass
 
     def draw(self, ds):
         x = self.i * self.size
         y = self.j * self.size
         w = self.size
+        width = 2
         WHITE = (255, 255, 255)
 
 
@@ -23,13 +24,13 @@ class Cell:
             pygame.draw.rect(ds, self.visitedColor, (x, y, w, w))
 
         if self.walls[0]:
-            pygame.draw.line(ds, WHITE, [x, y], [x + w, y])
+            pygame.draw.line(ds, WHITE, [x, y], [x + w, y], width=width)
         if self.walls[1]:
-            pygame.draw.line(ds, WHITE, [x+w, y], [x + w, y+w])
+            pygame.draw.line(ds, WHITE, [x+w, y], [x + w, y+w], width=width)
         if self.walls[2]:
-            pygame.draw.line(ds, WHITE, [x+w, y+w], [x, y+w])
+            pygame.draw.line(ds, WHITE, [x+w, y+w], [x, y+w], width=width)
         if self.walls[3]:
-            pygame.draw.line(ds, WHITE, [x, y+w], [x, y])
+            pygame.draw.line(ds, WHITE, [x, y+w], [x, y], width=width)
 
         pass
 

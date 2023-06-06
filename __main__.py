@@ -83,6 +83,7 @@ def removeWalls(current, new):
 def main():
     run = True
     done = False
+    start = False
 
     current = grid[0]
     current.visited = True
@@ -90,22 +91,23 @@ def main():
     while run:
         ds.fill((11, 11, 11))
 
-        # Step 1
-        new = check_neighbors(current.i, current.j)
-        if new:
-            new.visited = True
-            # Step 2
-            stack.append(new)
+        if start:
+            # Step 1
+            new = check_neighbors(current.i, current.j)
+            if new:
+                new.visited = True
+                # Step 2
+                stack.append(new)
 
-            # Step 3
-            removeWalls(current, new)
-            
-            # Step 4
-            current = new
-        elif len(stack) > 0:
-            current = stack.pop(-1)
-        else:
-            done = True
+                # Step 3
+                removeWalls(current, new)
+                
+                # Step 4
+                current = new
+            elif len(stack) > 0:
+                current = stack.pop(-1)
+            else:
+                done = True
 
         for g in grid:
             g.draw(ds)
@@ -116,6 +118,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    start = not start
 
         pygame.display.update()
         clock.tick(FPS)
