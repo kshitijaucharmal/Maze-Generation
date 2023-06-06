@@ -62,23 +62,31 @@ def check_neighbors(i, j):
         return None
 
 def removeWalls(current, new):
-
     x = current.i - new.i
     if x == 1:
-        current.walls[3] = False
         new.walls[1] = False
     elif x == -1:
         current.walls[1] = False
-        new.walls[3] = False
     y = current.j - new.j
     if y == 1:
         current.walls[0] = False
-        new.walls[2] = False
     elif y == -1:
-        current.walls[2] = False
         new.walls[0] = False
 
     pass
+
+def draw():
+    # Draw as lines to easily to convert to ray hit targets
+    width = 10
+    WHITE = (255, 255, 255)
+    pygame.draw.line(ds, WHITE, [0, 0], [WIDTH, 0], width=width)
+    pygame.draw.line(ds, WHITE, [WIDTH, 0], [WIDTH, HEIGHT], width=width)
+    pygame.draw.line(ds, WHITE, [WIDTH, HEIGHT], [0, HEIGHT], width=width)
+    pygame.draw.line(ds, WHITE, [0, HEIGHT], [0, 0], width=width)
+
+    for g in grid:
+        g.draw(ds)
+
 
 def main():
     run = True
@@ -109,8 +117,7 @@ def main():
             else:
                 done = True
 
-        for g in grid:
-            g.draw(ds)
+        draw()
 
         if not done:
             current.highlight(ds)
