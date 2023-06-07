@@ -1,11 +1,18 @@
 import pygame
+from wall import Wall
 
 class Cell:
     def __init__(self, i, j, size):
         self.i = i
         self.j = j
         self.size = size
-        self.walls = [True, True] # T R
+
+        x = self.i * self.size
+        y = self.j * self.size
+        w = self.size
+
+        self.top_w = Wall(x, y, x + w, y)
+        self.right_w = Wall(x + w, y, x + w, y + w)
 
         self.visited = False
 
@@ -13,18 +20,10 @@ class Cell:
         pass
 
     def draw(self, ds):
-        x = self.i * self.size
-        y = self.j * self.size
-        w = self.size
-        width = 2
-        WHITE = (255, 255, 255)
-
-
-        if self.walls[0]:
-            pygame.draw.line(ds, WHITE, [x, y], [x + w, y], width=width)
-        if self.walls[1]:
-            pygame.draw.line(ds, WHITE, [x+w, y], [x + w, y+w], width=width)
-
+        if self.top_w:
+            self.top_w.draw(ds)
+        if self.right_w:
+            self.right_w.draw(ds)
         pass
 
     def highlight(self, ds):

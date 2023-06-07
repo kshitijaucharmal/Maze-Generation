@@ -6,6 +6,6 @@ class Wall:
         self.b = pygame.Vector2(x2, y2)
         pass
 
-    def draw(self, ds, color=(255, 255, 255)):
-        pygame.draw.line(ds, color, self.a, self.b)
+    def draw(self, ds, color=(255, 255, 255), width=2):
+        pygame.draw.line(ds, color, self.a, self.b, width=width)
         pass

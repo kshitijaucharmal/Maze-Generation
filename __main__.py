@@ -1,7 +1,5 @@
 import pygame
-import random
 from maze_generator import MazeGenerator
-from cell import Cell
 
 WIDTH = 600
 HEIGHT = 600
@@ -18,12 +16,11 @@ maze = MazeGenerator(WIDTH, HEIGHT, ROWS)
 
 def main():
     run = True
-    done = False
+    # done = False
+    maze.instant_maze()
 
-    while not done or run:
+    while run:
         ds.fill((11, 11, 11))
-
-        done = maze.step()
 
         maze.draw(ds)
 

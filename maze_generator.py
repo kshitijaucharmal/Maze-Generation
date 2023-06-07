@@ -1,6 +1,6 @@
+from wall import Wall
 from cell import Cell
 import random
-import pygame
 
 class MazeGenerator:
     def __init__(self, width, height, rows):
@@ -8,6 +8,12 @@ class MazeGenerator:
         self.height = height
         self.rows = rows
         self.gridSize = self.width // self.rows
+
+        self.boundaries = []
+        self.boundaries.append(Wall(0, 0, self.width, 0))
+        self.boundaries.append(Wall(self.width, 0, self.width, self.height))
+        self.boundaries.append(Wall(self.width, self.height, 0, self.height))
+        self.boundaries.append(Wall(0, self.height, 0, 0))
 
         self.grid = []
         self.stack = []
@@ -68,31 +74,34 @@ class MazeGenerator:
     def removeWalls(self, current, new):
         x = current.i - new.i
         if x == 1:
-            new.walls[1] = False
+            new.right_w = None
         elif x == -1:
-            current.walls[1] = False
+            current.right_w = None
         y = current.j - new.j
         if y == 1:
-            current.walls[0] = False
+            current.top_w = None
         elif y == -1:
-            new.walls[0] = False
+            new.top_w = None
         pass
 
     def draw(self, ds):
         # Draw as lines to easily to convert to ray hit targets
         w = 10
         WHITE = (255, 255, 255)
-        pygame.draw.line(ds, WHITE, [0, 0], [self.width, 0], width=w)
-        pygame.draw.line(ds, WHITE, [self.width, 0], [self.width, self.height], width=w)
-        pygame.draw.line(ds, WHITE, [self.width, self.height], [0, self.height], width=w)
-        pygame.draw.line(ds, WHITE, [0, self.height], [0, 0], width=w)
+        for b in self.boundaries:
+            b.draw(ds, WHITE, w)
 
         for g in self.grid:
             g.draw(ds)
 
         if not self.done:
             self.current.highlight(ds)
+        pass
 
+    def instant_maze(self):
+        done = False
+        while not done:
+            done = self.step()
 
     def step(self):
         if self.done:
