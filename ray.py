@@ -4,19 +4,26 @@ import pygame
 class Ray:
     def __init__(self, pos, angle):
         self.pos = pos
-        self.dir = self.from_angle(angle)
+        self.dir = self.from_angle(math.radians(angle))
         pass
 
     def from_angle(self, angle):
-        return pygame.Vector2(math.cos(angle), math.sin(angle))
+        a = pygame.Vector2(math.cos(angle), math.sin(angle))
+        print(a)
+        return a
+
+    def set(self, new_pos):
+        self.pos = new_pos
+        pass
 
     def look_at(self, x, y):
         self.dir = pygame.Vector2(x, y) - self.pos
-        self.dir.normalize()
+        self.dir = self.dir.normalize()
         pass
 
     def draw(self, ds):
-        pygame.draw.line(ds, (255, 255, 255), self.pos, self.dir * 10)
+        pygame.draw.circle(ds, (255, 255, 0), self.pos, 4)
+        # pygame.draw.line(ds, (255, 255, 255), self.pos, self.pos + self.dir * 100)
         pass
 
     def cast(self, wall):
@@ -40,6 +47,6 @@ class Ray:
             pt = pygame.Vector2()
             pt.x = x1 + t * (x2 - x1)
             pt.y = y1 + t * (y2 - y1)
-            return pt
+            return pygame.Vector2(pt)
         else:
           return None

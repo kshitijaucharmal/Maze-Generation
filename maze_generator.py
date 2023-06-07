@@ -18,6 +18,8 @@ class MazeGenerator:
         self.grid = []
         self.stack = []
 
+        self.walls = []
+
         self.create_maze()
         
         self.current = self.grid[0]
@@ -86,7 +88,7 @@ class MazeGenerator:
 
     def draw(self, ds):
         # Draw as lines to easily to convert to ray hit targets
-        w = 10
+        w = 2
         WHITE = (255, 255, 255)
         for b in self.boundaries:
             b.draw(ds, WHITE, w)
@@ -102,6 +104,14 @@ class MazeGenerator:
         done = False
         while not done:
             done = self.step()
+
+        for i in range(len(self.grid)):
+            if self.grid[i].top_w:
+                self.walls.append(self.grid[i].top_w)
+            if self.grid[i].right_w:
+                self.walls.append(self.grid[i].right_w)
+
+        self.walls.extend(self.boundaries)
 
     def step(self):
         if self.done:
