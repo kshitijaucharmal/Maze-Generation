@@ -1,11 +1,11 @@
 import pygame
 from maze_generator import MazeGenerator
 
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 640
+HEIGHT = 640
 FPS = 60
 
-ROWS = 15
+ROWS = 16
 gridSize = WIDTH // ROWS
 
 ds = pygame.display.set_mode((WIDTH, HEIGHT))
