@@ -1,6 +1,5 @@
 import pygame
 from maze_generator import MazeGenerator
-from ray import Ray
 
 WIDTH = 640
 HEIGHT = 640
@@ -21,7 +20,9 @@ def main():
     run = True
     # done = False
 
-    maze.instant_maze()
+    walls = maze.instant_maze()
+
+    print("Total Walls:", len(walls))
 
     while run:
         ds.fill((11, 11, 11))

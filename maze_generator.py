@@ -112,6 +112,7 @@ class MazeGenerator:
                 self.walls.append(self.grid[i].right_w)
 
         self.walls.extend(self.boundaries)
+        return self.walls
 
     def step(self):
         if self.done:
