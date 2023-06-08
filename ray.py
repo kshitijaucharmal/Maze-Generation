@@ -49,4 +49,17 @@ class Ray:
             pt.y = y1 + t * (y2 - y1)
             return pygame.Vector2(pt)
         else:
-          return None
+            return None
+
+    def get_closest_wall(self, walls):
+        min_dist = 1000
+        closest = None
+        for b in walls:
+            p = self.cast(b)
+            if p:
+                dist = self.pos.distance_to(p)
+                if dist < min_dist:
+                    min_dist = dist
+                    closest = p
+        return closest
+

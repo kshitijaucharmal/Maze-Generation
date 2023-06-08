@@ -15,12 +15,19 @@ clock = pygame.time.Clock()
 
 maze = MazeGenerator(WIDTH, HEIGHT, ROWS)
 
-ray = Ray(pygame.Vector2(20, 20), 60)
-pos = pygame.Vector2(ray.pos.x, ray.pos.y)
+rays = []
+pos = pygame.Vector2(15, 15)
 
 def main():
     run = True
     # done = False
+
+    rays.append(Ray(pygame.Vector2(20, 20), 90))
+    rays.append(Ray(pygame.Vector2(20, 20), -90))
+    rays.append(Ray(pygame.Vector2(20, 20), 45))
+    rays.append(Ray(pygame.Vector2(20, 20), -45))
+    rays.append(Ray(pygame.Vector2(20, 20), 0))
+
     maze.instant_maze()
 
     while run:
@@ -38,23 +45,16 @@ def main():
         if keys[pygame.K_d]:
             pos.x += 1
 
-        ray.set(pos)
-        ray.look_at(mouse_pos.x, mouse_pos.y)
-        min_dist = 1000
-        closest = None
-        for b in maze.walls:
-            p = ray.cast(b)
-            if p:
-                dist = ray.pos.distance_to(p)
-                if dist < min_dist:
-                    min_dist = dist
-                    closest = p
+        for ray in rays:
+            ray.set(pos)
+            # ray.look_at(mouse_pos.x, mouse_pos.y)
+            closest = ray.get_closest_wall(maze.walls)
+            if closest:
+                pygame.draw.line(ds, (255, 255, 0), ray.pos, closest)
+                pygame.draw.circle(ds, (255, 0, 0), closest, 4)
 
         # Drawing
         maze.draw(ds)
-        if closest:
-            pygame.draw.line(ds, (255, 255, 0), ray.pos, closest)
-            pygame.draw.circle(ds, (255, 0, 0), closest, 4)
         ray.draw(ds)
 
         for event in pygame.event.get():
